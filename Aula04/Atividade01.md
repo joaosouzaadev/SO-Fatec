@@ -1,4 +1,4 @@
-[atividade01-formatacao-instalacao-windows (1).md](https://github.com/user-attachments/files/31381739/atividade01-formatacao-instalacao-windows.1.md)
+
 # Atividade 01 — Formatação e Instalação de um Sistema Operacional Windows
 
 **Disciplina:** Estrutura e Arquitetura de Sistemas Operacionais
