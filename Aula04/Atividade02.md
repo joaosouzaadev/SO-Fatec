@@ -1,4 +1,4 @@
-[gemini-code-1787583657162.md](https://github.com/user-attachments/files/31381750/gemini-code-1787583657162.md)
+
 # Atividade 02 - Sistemas Operacionais Derivados e Análise Comparativa
 
 **Disciplina:** Estrutura e Arquitetura de Sistemas Operacionais  
