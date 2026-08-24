@@ -1,59 +1,35 @@
-# 🖥️ Atividade 02 — Sistemas Operacionais Derivados e Análise Comparativa
+[gemini-code-1787583657162.md](https://github.com/user-attachments/files/31381750/gemini-code-1787583657162.md)
+# Atividade 02 - Sistemas Operacionais Derivados e Análise Comparativa
 
-![Disciplina](https://img.shields.io/badge/Disciplina-Sistemas_Operacionais-blue)
-![Status](https://img.shields.io/badge/Status-Conclu%C3%ADdo-brightgreen)
-![Versão](https://img.shields.io/badge/Vers%C3%A3o-2.0.0-orange)
-![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-yellow)
-
----
-
-## 📑 Índice
-1. [Sobre a Atividade](#-sobre-a-atividade)
-2. [Sistemas Operacionais Pesquisados](#-sistemas-operacionais-pesquisados)
-3. [Arquitetura de Linhagem (Mermaid)](#-arquitetura-de-linhagem-mermaid)
-4. [Tabela Comparativa Avançada](#-tabela-comparativa-avançada)
-5. [Detalhamento de Modificações](#-detalhamento-de-modificações)
-6. [Checklist de Requisitos](#-checklist-de-requisitos)
-7. [Conclusão](#-conclusão)
+**Disciplina:** Estrutura e Arquitetura de Sistemas Operacionais  
+**Professor:** Me. Deivison S. Takatu  
 
 ---
 
-## 📌 Sobre a Atividade
+## 1. Pesquisa: Sistemas Operacionais e Suas Bases
 
-> **Curso:** Análise e Desenvolvimento de Sistemas  
-> **Disciplina:** Estrutura e Arquitetura de Sistemas Operacionais  
-> **Professor:** Me. Deivison S. Takatu  
+Abaixo estão selecionados 5 Sistemas Operacionais desenvolvidos com base em outros sistemas, reaproveitando seus kernels, arquiteturas ou estruturas:
 
-> [!NOTE]  
-> O objetivo desta atividade é identificar **5 Sistemas Operacionais** desenvolvidos a partir de outro sistema base (reaproveitando kernel, arquitetura ou estrutura) e analisar comparativamente suas diferenças, inovações e casos de uso.
-
----
-
-## 🔍 Sistemas Operacionais Pesquisados
-
-1. **Android** (Base: *Kernel Linux*)
-2. **macOS** (Base: *Darwin / FreeBSD / Mach*)
-3. **Ubuntu** (Base: *Debian GNU/Linux*)
-4. **SteamOS 3.x** (Base: *Arch Linux*)
-5. **Orbis OS** (Base: *FreeBSD 9.0*)
+1. **Android**: Desenvolvido pelo Google, utiliza uma versão modificada do **Kernel Linux** como sua base subjacente para gerenciamento de memória, processos e drivers de hardware.
+2. **macOS**: Desenvolvido pela Apple, utiliza o sistema **Darwin**, que por sua vez é baseado no **FreeBSD** e na arquitetura de microkernel **Mach** (família Unix).
+3. **Ubuntu**: Uma das distribuições Linux mais populares para desktops e servidores, desenvolvida pela Canonical a partir da base do **Debian**.
+4. **SteamOS 3.x**: Sistema operacional para jogos desenvolvido pela Valve (utilizado no Steam Deck), baseado na distribuição **Arch Linux**.
+5. **Orbis OS**: Sistema operacional proprietário utilizado no console **PlayStation 4** (PS4), desenvolvido pela Sony a partir do **FreeBSD 9.0**.
 
 ---
 
-## 🧬 Arquitetura de Linhagem (Mermaid)
+## 2. Tabela Comparativa
 
-```mermaid
-graph TD
-    A[Kernel Linux / GNU] -->|Kernel modificado| B(Android)
-    A -->|Distribuição base| C(Debian)
-    C -->|Foco em facilidade e UX| D(Ubuntu)
-    
-    E[BSD / Unix] -->|Darwin / Mach| F(macOS)
-    E -->|FreeBSD 9.0| G(Orbis OS - PS4)
-    
-    H[Arch Linux] -->|Immutable OS + Proton| I(SteamOS 3.x)
+| Sistema Operacional Derivado | Sistema Base | Principais Diferenças e Modificações |
+| :--- | :--- | :--- |
+| **Android** | Kernel Linux | Substituiu o ambiente de usuário tradicional Linux (GNU/X11) por uma máquina virtual própria (ART / Dalvik), biblioteca C simplificada (Bionic) e um framework de aplicações voltado para dispositivos móveis e telas sensíveis ao toque. |
+| **macOS** | FreeBSD / Mach (Darwin) | Adicionou uma interface gráfica proprietária (Aqua), frameworks exclusivos (Cocoa, Metal) e uma camada profunda de integração com o ecossistema de hardware e software da Apple. |
+| **Ubuntu** | Debian | Foca em maior facilidade de uso para usuários finais, ciclo de lançamentos fixo e previsível (a cada 6 meses), ambiente de desktop customizado e inclusão por padrão de drivers proprietários e codecs de mídia. |
+| **SteamOS 3.x** | Arch Linux | Adicionou o ambiente imersivo para jogos (*Gamescope*), sistema de arquivos somente leitura com atualizações atômicas A/B e a camada de compatibilidade **Proton** para executar jogos do Windows no Linux. |
+| **Orbis OS** | FreeBSD 9.0 | Removeu componentes gerais do Unix, adicionou drivers de hardware customizados para a GPU e APU do console, e implementou APIs de renderização de baixo nível (GNM/GNMX) e gerenciamento de memória exclusivo para jogos. |
 
-    style B fill:#3DDC84,stroke:#333,stroke-width:1px,color:#000
-    style D fill:#E95420,stroke:#333,stroke-width:1px,color:#fff
-    style F fill:#000000,stroke:#fff,stroke-width:1px,color:#fff
-    style I fill:#1b2838,stroke:#66c0f4,stroke-width:1px,color:#fff
-    style G fill:#003791,stroke:#333,stroke-width:1px,color:#fff
+---
+
+## 3. Conclusão
+
+Conforme discutido em aula, o reaproveitamento da estrutura de um sistema operacional existente reduz custos de desenvolvimento, traz maior estabilidade e segurança prévias, e permite que os desenvolvedores foquem nas particularidades do hardware ou nas necessidades específicas do público-alvo do novo sistema.
