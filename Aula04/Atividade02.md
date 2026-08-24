@@ -1,4 +1,3 @@
-[gemini-code-1787585113591.md](https://github.com/user-attachments/files/31381481/gemini-code-1787585113591.md)
 # 🖥️ Atividade 02 — Sistemas Operacionais Derivados e Análise Comparativa
 
 ![Disciplina](https://img.shields.io/badge/Disciplina-Sistemas_Operacionais-blue)
@@ -32,11 +31,11 @@
 
 ## 🔍 Sistemas Operacionais Pesquisados
 
-1. **Android** (Base: *Kernel Linux*)[cite: 1]
-2. **macOS** (Base: *Darwin / FreeBSD / Mach*)[cite: 1]
-3. **Ubuntu** (Base: *Debian GNU/Linux*)[cite: 1]
-4. **SteamOS 3.x** (Base: *Arch Linux*)[cite: 1]
-5. **Orbis OS** (Base: *FreeBSD 9.0*)[cite: 1]
+1. **Android** (Base: *Kernel Linux*)
+2. **macOS** (Base: *Darwin / FreeBSD / Mach*)
+3. **Ubuntu** (Base: *Debian GNU/Linux*)
+4. **SteamOS 3.x** (Base: *Arch Linux*)
+5. **Orbis OS** (Base: *FreeBSD 9.0*)
 
 ---
 
