@@ -1,4 +1,4 @@
-[historia_sistemas_operacionais.md](https://github.com/user-attachments/files/31490713/historia_sistemas_operacionais.md)
+
 # História dos Sistemas Operacionais
 
 **Disciplina:** Estrutura e Arquitetura de Sistemas Operacionais
@@ -500,4 +500,4 @@ Este resumo pode ser utilizado de diferentes formas, dependendo do objetivo do e
 
 ---
 
-*Fim do documento.*
+
