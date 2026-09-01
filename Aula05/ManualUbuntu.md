@@ -1,3 +1,4 @@
+
 # Manual: Funcionalidades do Ubuntu que não existem no Windows
 
 ## Introdução
@@ -89,6 +90,20 @@ Salve e feche o editor. A tarefa já fica agendada no sistema, sem precisar de n
 
 ---
 
+## 6. Páginas de manual (`man`) para qualquer comando
+
+No Windows, a documentação de um comando costuma exigir uma busca no navegador. No Ubuntu, praticamente todo comando do sistema já vem com um manual completo embutido, acessível offline, direto no terminal.
+
+**Como testar:**
+
+```bash
+man ls
+```
+
+Isso abre o manual completo do comando `ls`, explicando todas as suas opções (como `-l`, `-a`, `-h`). Use as setas para navegar e a tecla `q` para sair. Funciona da mesma forma para praticamente qualquer comando, por exemplo `man cp` ou `man chmod`.
+
+---
+
 ## Conclusão
 
-Essas 5 funcionalidades mostram como o Ubuntu tem uma filosofia diferente do Windows: mais centrada em terminal, em arquivos de texto simples e em ferramentas nativas do sistema, ao invés de programas gráficos separados para cada tarefa. Todas podem ser testadas em poucos minutos em uma máquina virtual.
+Essas 6 funcionalidades mostram como o Ubuntu tem uma filosofia diferente do Windows: mais centrada em terminal, em arquivos de texto simples e em ferramentas nativas do sistema, ao invés de programas gráficos separados para cada tarefa. Todas podem ser testadas em poucos minutos em uma máquina virtual.
