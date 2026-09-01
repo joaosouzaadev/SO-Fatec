@@ -1,4 +1,4 @@
-[manual-funcionalidades-ubuntu (2).md](https://github.com/user-attachments/files/31712624/manual-funcionalidades-ubuntu.2.md)
+
 <p align="center">
   <img src="./banner-ubuntu-manual.svg" alt="Manual: Funcionalidades do Ubuntu que o Windows não tem" width="100%"/>
 </p>
