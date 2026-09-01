@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual: Funcionalidades do Ubuntu que o Windows não tem</title>
+<style>
+  :root{
+    --bg: #241021;
+    --bg-deep: #1A0B18;
+    --panel: #341830;
+    --panel-alt: #3F1F3B;
+    --line: #4A2745;
+    --accent: #E95420;
+    --accent-soft: #F2A488;
+    --text: #F5EDF4;
+    --text-muted: #B79DB5;
+    --term-out: #8FD9A8;
+    --term-bg: #1A0B18;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+  }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  header{
+    margin-bottom: 40px;
+  }
+
+  .kicker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color: var(--accent-soft);
+    font-family: var(--mono);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .kicker .dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--accent);
+  }
+
+  h1{
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  header p{
+    color: var(--text-muted);
+    max-width: 56ch;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .progress{
+    margin-top: 28px;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+
+  .progress-track{
+    flex: 1;
+    height: 6px;
+    background: var(--bg-deep);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill{
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width .35s ease;
+  }
+  .progress-label{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .card{
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line);
+    background: var(--panel);
+    border-radius: 8px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color .2s ease;
+  }
+  .card.done{ border-left-color: var(--accent); }
+
+  .card-head{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    width:100%;
+    padding: 18px 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text);
+    font-family: inherit;
+  }
+
+  .num{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-soft);
+    min-width: 22px;
+  }
+
+  .card-title{
+    flex:1;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .chev{
+    color: var(--text-muted);
+    transition: transform .2s ease;
+    flex-shrink:0;
+  }
+  .card.open .chev{ transform: rotate(90deg); }
+
+  .card-body{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
+  }
+  .card.open .card-body{ max-height: 900px; }
+
+  .card-inner{
+    padding: 0 18px 22px;
+  }
+
+  .desc{
+    color: var(--text-muted);
+    font-size: 14.5px;
+    margin: 0 0 16px;
+  }
+
+  .term{
+    background: var(--term-bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .term-bar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding: 9px 12px;
+    background: var(--panel-alt);
+    border-bottom: 1px solid var(--line);
+  }
+  .term-bar span{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--line);
+  }
+  .term-bar span:nth-child(1){ background:#E9545480; }
+  .term-bar span:nth-child(2){ background:#E9A65480; }
+  .term-bar span:nth-child(3){ background:#54E97480; }
+  .term-label{
+    margin-left: 6px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+  .term-body{
+    padding: 14px 16px 16px;
+    font-family: var(--mono);
+    font-size: 13.5px;
+  }
+  .term-line{ margin: 0 0 6px; white-space: pre-wrap; word-break: break-word; }
+  .prompt{ color: var(--accent-soft); }
+  .out{ color: var(--term-out); }
+  .term-line:last-child{ margin-bottom:0; }
+
+  .copy-row{
+    display:flex;
+    justify-content:flex-end;
+    margin-top: -4px;
+    margin-bottom: 14px;
+  }
+  .copy-btn{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--panel-alt);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .copy-btn:hover{ color: var(--text); border-color: var(--accent); }
+
+  .why{
+    font-size: 14px;
+    color: var(--text);
+    background: var(--panel-alt);
+    border-left: 2px solid var(--accent);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 16px;
+  }
+  .why b{ color: var(--accent-soft); font-weight: 600; }
+
+  .mark-row{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+    width: fit-content;
+  }
+  .box{
+    width: 16px; height:16px;
+    border: 1px solid var(--text-muted);
+    border-radius: 4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .card.done .box{ background: var(--accent); border-color: var(--accent); }
+  .box svg{ display:none; width:10px; height:10px; }
+  .card.done .box svg{ display:block; }
+  .card.done .mark-row{ color: var(--accent-soft); }
+
+  footer{
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card-body, .progress-fill, .chev{ transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker"><span class="dot"></span>MANUAL &middot; VIRTUALIZAÇÃO E SO</div>
+    <h1>6 funcionalidades do Ubuntu que o Windows não tem</h1>
+    <p>Cada item abaixo traz o comando exato para testar na sua máquina virtual e o que esperar como resultado. Marque como testado conforme for explorando.</p>
+
+    <div class="progress">
+      <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+      <div class="progress-label" id="label">0 / 6 testadas</div>
+    </div>
+  </header>
+
+  <div id="cards"></div>
+
+  <footer>
+    Documentação de apoio para a Tarefa 05 — teste cada função em uma VM com Ubuntu e registre suas observações.
+  </footer>
+
+</div>
+
+<script>
+const data = [
+  {
+    title: "Gerenciador de pacotes central (APT)",
+    desc: "No Windows, cada programa vem de um instalador .exe diferente. No Ubuntu, quase tudo é instalado e atualizado por um único gerenciador central, com resolução automática de dependências.",
+    lines: [
+      {t:"prompt", v:"$ sudo apt update"},
+      {t:"out", v:"Lendo listas de pacotes... Pronto"},
+      {t:"prompt", v:"$ sudo apt install htop"},
+      {t:"out", v:"Configurando htop (3.0.5-7)..."}
+    ],
+    why: "Não existe download de site em site: tudo vem de um repositório confiável e centralizado."
+  },
+  {
+    title: "Modelo de superusuário com sudo",
+    desc: "No Windows, uma conta Administrador já mantém privilégios elevados o tempo todo. No Linux, o usuário comum só vira superusuário (root) comando a comando.",
+    lines: [
+      {t:"prompt", v:"$ whoami"},
+      {t:"out", v:"souza"},
+      {t:"prompt", v:"$ sudo whoami"},
+      {t:"out", v:"root"}
+    ],
+    why: "Cada ação administrativa exige autorização explícita, comando por comando."
+  },
+  {
+    title: "Filosofia \"tudo é um arquivo\"",
+    desc: "Informações de hardware e processos podem ser lidas como arquivos de texto comuns — algo que não existe da mesma forma no Windows.",
+    lines: [
+      {t:"prompt", v:"$ cat /proc/cpuinfo"},
+      {t:"out", v:"model name : Intel Core i5 ..."},
+      {t:"prompt", v:"$ ls /dev"},
+      {t:"out", v:"sda  sr0  usb1  tty1 ..."}
+    ],
+    why: "Hardware, processos e até a memória aparecem como arquivos dentro do sistema."
+  },
+  {
+    title: "Sistema de arquivos sensível a maiúsculas",
+    desc: "No Windows (NTFS padrão), arquivo.txt e Arquivo.txt são o mesmo arquivo. No Ubuntu, são dois arquivos diferentes.",
+    lines: [
+      {t:"prompt", v:"$ touch teste.txt Teste.txt"},
+      {t:"prompt", v:"$ ls"},
+      {t:"out", v:"teste.txt   Teste.txt"}
+    ],
+    why: "O sistema distingue letras maiúsculas de minúsculas em qualquer nome de arquivo."
+  },
+  {
+    title: "Agendamento de tarefas nativo (cron)",
+    desc: "O Windows precisa de um programa à parte (Agendador de Tarefas). No Ubuntu, o cron já vem embutido e é configurado só por linha de comando.",
+    lines: [
+      {t:"prompt", v:"$ crontab -e"},
+      {t:"out", v:"0 8 * * * touch /home/souza/lembrete.txt"},
+      {t:"out", v:"# tarefa salva"}
+    ],
+    why: "Agendamento nativo do sistema, sem instalar nenhum programa extra."
+  },
+  {
+    title: "Páginas de manual (man) para qualquer comando",
+    desc: "Praticamente todo comando do Ubuntu já vem com documentação completa embutida, acessível offline direto no terminal.",
+    lines: [
+      {t:"prompt", v:"$ man ls"},
+      {t:"out", v:"LS(1)   Manual do usuário   LS(1)"},
+      {t:"out", v:"-l   usa formato de listagem longo"},
+      {t:"out", v:"-a   mostra arquivos ocultos"}
+    ],
+    why: "Documentação completa e offline para quase qualquer comando do sistema."
+  }
+];
+
+const container = document.getElementById('cards');
+const fill = document.getElementById('fill');
+const label = document.getElementById('label');
+let doneCount = 0;
+
+function updateProgress(){
+  const pct = Math.round((doneCount / data.length) * 100);
+  fill.style.width = pct + '%';
+  label.textContent = doneCount + ' / ' + data.length + ' testadas';
+}
+
+data.forEach((item, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const termLines = item.lines.map(l =>
+    `<p class="term-line ${l.t === 'prompt' ? 'prompt' : 'out'}">${l.v}</p>`
+  ).join('');
+
+  const firstCmd = item.lines.find(l => l.t === 'prompt').v;
+
+  card.innerHTML = `
+    <button class="card-head" type="button">
+      <span class="num">0${i+1}</span>
+      <span class="card-title">${item.title}</span>
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="card-body">
+      <div class="card-inner">
+        <p class="desc">${item.desc}</p>
+        <div class="term">
+          <div class="term-bar"><span></span><span></span><span></span><span class="term-label">ubuntu@vm: ~</span></div>
+          <div class="term-body">${termLines}</div>
+        </div>
+        <div class="copy-row"><button class="copy-btn" type="button" data-cmd="${firstCmd.replace('$ ','')}">copiar comando</button></div>
+        <div class="why"><b>Por que importa:</b> ${item.why}</div>
+        <div class="mark-row">
+          <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <span>marcar como testado</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const head = card.querySelector('.card-head');
+  head.addEventListener('click', () => {
+    card.classList.toggle('open');
+  });
+
+  const markRow = card.querySelector('.mark-row');
+  markRow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasDone = card.classList.contains('done');
+    card.classList.toggle('done');
+    doneCount += wasDone ? -1 : 1;
+    updateProgress();
+  });
+
+  const copyBtn = card.querySelector('.copy-btn');
+  copyBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const cmd = copyBtn.getAttribute('data-cmd');
+    navigator.clipboard?.writeText(cmd).then(() => {
+      const original = copyBtn.textContent;
+      copyBtn.textContent = 'copiado!';
+      setTimeout(() => { copyBtn.textContent = original; }, 1200);
+    });
+  });
+
+  container.appendChild(card);
+});
+
+// Open first card by default
+container.firstElementChild?.classList.add('open');
+updateProgress();
+</script>
+</body>
+</html>
+
+# Manual: Funcionalidades do Ubuntu que não existem no Windows
+
+## Introdução
+
+Este manual apresenta 5 funcionalidades simples do Ubuntu (Linux) que não existem, ou funcionam de forma bem diferente, no Windows. O objetivo é que qualquer pessoa curiosa consiga testar cada uma delas rapidamente em uma máquina virtual com Ubuntu.
+
+---
+
+## 1. Gerenciador de pacotes central (APT)
+
+No Windows, cada programa é baixado de um site diferente, em formato `.exe`, e cada um tem seu próprio instalador. No Ubuntu, quase todo software vem de repositórios centrais, gerenciados por um único comando.
+
+**Como testar:**
+
+```bash
+sudo apt update
+sudo apt list --upgradable
+sudo apt install htop
+```
+
+O primeiro comando atualiza a lista de pacotes disponíveis. O segundo mostra todos os programas do sistema com atualização pendente, de uma vez só. O terceiro instala o programa `htop` (um monitor de sistema) já resolvendo automaticamente qualquer dependência necessária.
+
+Para remover: `sudo apt remove htop`
+
+---
+
+## 2. Modelo de superusuário com `sudo`
+
+No Windows, uma conta "Administrador" já tem os privilégios liberados o tempo todo (com uma confirmação pontual do UAC). No Linux, existe um usuário separado chamado **root**, e o usuário comum só ganha privilégios administrativos comando a comando, usando `sudo`.
+
+**Como testar:**
+
+```bash
+whoami
+sudo whoami
+```
+
+O primeiro comando mostra seu usuário normal. O segundo, com `sudo`, pede sua senha e mostra `root` — provando que, só naquele comando, você virou o superusuário do sistema.
+
+---
+
+## 3. Filosofia "tudo é um arquivo"
+
+No Ubuntu, até informações de hardware e processos em execução podem ser lidas como se fossem arquivos de texto comuns. Isso não existe no Windows.
+
+**Como testar:**
+
+```bash
+cat /proc/cpuinfo
+ls /dev
+```
+
+O primeiro comando mostra os detalhes do processador do computador, lidos diretamente de um "arquivo" do sistema. O segundo lista os dispositivos conectados (discos, portas USB etc.), também representados como arquivos dentro da pasta `/dev`.
+
+---
+
+## 4. Sistema de arquivos sensível a maiúsculas e minúsculas
+
+No Windows (NTFS padrão), `arquivo.txt` e `Arquivo.txt` são tratados como o mesmo arquivo. No Ubuntu, são dois arquivos completamente diferentes.
+
+**Como testar:**
+
+```bash
+touch teste.txt Teste.txt
+ls
+```
+
+O comando `ls` vai mostrar os dois arquivos lado a lado, provando que o sistema diferencia letras maiúsculas de minúsculas no nome.
+
+---
+
+## 5. Agendamento de tarefas nativo com `cron`
+
+O Windows precisa do "Agendador de Tarefas", um programa à parte com interface gráfica. No Ubuntu, o agendamento de tarefas (`cron`) já vem embutido no sistema desde sempre, e pode ser configurado só por linha de comando.
+
+**Como testar:**
+
+```bash
+crontab -e
+```
+
+Ao abrir o editor, adicione a linha abaixo para, por exemplo, criar um arquivo todo dia às 8h da manhã:
+
+```
+0 8 * * * touch /home/$USER/lembrete.txt
+```
+
+Salve e feche o editor. A tarefa já fica agendada no sistema, sem precisar de nenhum programa extra.
+
+---
+
+## 6. Páginas de manual (`man`) para qualquer comando
+
+No Windows, a documentação de um comando costuma exigir uma busca no navegador. No Ubuntu, praticamente todo comando do sistema já vem com um manual completo embutido, acessível offline, direto no terminal.
+
+**Como testar:**
+
+```bash
+man ls
+```
+
+Isso abre o manual completo do comando `ls`, explicando todas as suas opções (como `-l`, `-a`, `-h`). Use as setas para navegar e a tecla `q` para sair. Funciona da mesma forma para praticamente qualquer comando, por exemplo `man cp` ou `man chmod`.
+
+---
+
+## Conclusão
+
+Essas 6 funcionalidades mostram como o Ubuntu tem uma filosofia diferente do Windows: mais centrada em terminal, em arquivos de texto simples e em ferramentas nativas do sistema, ao invés de programas gráficos separados para cada tarefa. Todas podem ser testadas em poucos minutos em uma máquina virtual.
+
+# Manual: Funcionalidades do Ubuntu que não existem no Windows
+
+## Introdução
+
+Este manual apresenta 5 funcionalidades simples do Ubuntu (Linux) que não existem, ou funcionam de forma bem diferente, no Windows. O objetivo é que qualquer pessoa curiosa consiga testar cada uma delas rapidamente em uma máquina virtual com Ubuntu.
+
+---
+
+## 1. Gerenciador de pacotes central (APT)
+
+No Windows, cada programa é baixado de um site diferente, em formato `.exe`, e cada um tem seu próprio instalador. No Ubuntu, quase todo software vem de repositórios centrais, gerenciados por um único comando.
+
+**Como testar:**
+
+```bash
+sudo apt update
+sudo apt list --upgradable
+sudo apt install htop
+```
+
+O primeiro comando atualiza a lista de pacotes disponíveis. O segundo mostra todos os programas do sistema com atualização pendente, de uma vez só. O terceiro instala o programa `htop` (um monitor de sistema) já resolvendo automaticamente qualquer dependência necessária.
+
+Para remover: `sudo apt remove htop`
+
+---
+
+## 2. Modelo de superusuário com `sudo`
+
+No Windows, uma conta "Administrador" já tem os privilégios liberados o tempo todo (com uma confirmação pontual do UAC). No Linux, existe um usuário separado chamado **root**, e o usuário comum só ganha privilégios administrativos comando a comando, usando `sudo`.
+
+**Como testar:**
+
+```bash
+whoami
+sudo whoami
+```
+
+O primeiro comando mostra seu usuário normal. O segundo, com `sudo`, pede sua senha e mostra `root` — provando que, só naquele comando, você virou o superusuário do sistema.
+
+---
+
+## 3. Filosofia "tudo é um arquivo"
+
+No Ubuntu, até informações de hardware e processos em execução podem ser lidas como se fossem arquivos de texto comuns. Isso não existe no Windows.
+
+**Como testar:**
+
+```bash
+cat /proc/cpuinfo
+ls /dev
+```
+
+O primeiro comando mostra os detalhes do processador do computador, lidos diretamente de um "arquivo" do sistema. O segundo lista os dispositivos conectados (discos, portas USB etc.), também representados como arquivos dentro da pasta `/dev`.
+
+---
+
+## 4. Sistema de arquivos sensível a maiúsculas e minúsculas
+
+No Windows (NTFS padrão), `arquivo.txt` e `Arquivo.txt` são tratados como o mesmo arquivo. No Ubuntu, são dois arquivos completamente diferentes.
+
+**Como testar:**
+
+```bash
+touch teste.txt Teste.txt
+ls
+```
+
+O comando `ls` vai mostrar os dois arquivos lado a lado, provando que o sistema diferencia letras maiúsculas de minúsculas no nome.
+
+---
+
+## 5. Agendamento de tarefas nativo com `cron`
+
+O Windows precisa do "Agendador de Tarefas", um programa à parte com interface gráfica. No Ubuntu, o agendamento de tarefas (`cron`) já vem embutido no sistema desde sempre, e pode ser configurado só por linha de comando.
+
+**Como testar:**
+
+```bash
+crontab -e
+```
+
+Ao abrir o editor, adicione a linha abaixo para, por exemplo, criar um arquivo todo dia às 8h da manhã:
+
+```
+0 8 * * * touch /home/$USER/lembrete.txt
+```
+
+Salve e feche o editor. A tarefa já fica agendada no sistema, sem precisar de nenhum programa extra.
+
+---
+
+## Conclusão
+
+Essas 5 funcionalidades mostram como o Ubuntu tem uma filosofia diferente do Windows: mais centrada em terminal, em arquivos de texto simples e em ferramentas nativas do sistema, ao invés de programas gráficos separados para cada tarefa. Todas podem ser testadas em poucos minutos em uma máquina virtual.
